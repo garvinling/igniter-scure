@@ -140,25 +140,16 @@ class Welcome extends CI_Controller {
 			$this -> addActivity($email,0);
 			$system_status = "Arm System";				//Passes to the view
 			$_SESSION['system_status'] = $system_status;
-			//echo "<li> new if test</li>";
-			?>
-
-			<li>wtfdude</li>
-
-			<?
-
-
-
+			echo "<li>"."- System armed at "."<span style=\"color:red;\">".date("g: ia")."</span>"."</li>";
 		}
 		else{
 
 			$data = 0;
 			$this -> welcome_model -> setSystemStatus($email,$data);
 			$this -> addActivity($email,1);
-			$system_status = "Arm System";				//Passes to the view
+			$system_status = "Disarm System";				//Passes to the view
 			$_SESSION['system_status'] = $system_status;
-			echo "<li>new test</li>";
-		
+			echo "<li>"."- System disarmed at "."<span style=\"color:red;\">".date("g: ia")."</span>"."</li>";
 		}
 
 
@@ -207,17 +198,7 @@ class Welcome extends CI_Controller {
 			}
 	}//end elseif
 
-
-
-
 	}
-
-
-
-
-
-
-
 
 }
 

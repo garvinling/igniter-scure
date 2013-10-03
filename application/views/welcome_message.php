@@ -15,17 +15,39 @@
   <script type="text/javascript">
 $(document).ready(function(){
 
-	$(".arm_button").click(function(){
+
+	$("#arm_button").click(function(){
+			var buttonStatus = $("#arm_button").val();
   			//We need to also handle loading to the database.  
   			$.ajax({
-  				data: "FUCK YOU",
   				url: "welcome/liveUpdateActivity",
   				cache: false,
   				success: function(html){
+
   					$("ul#update").append(html);
-  					$("ul#update").slideDown("slow");
-  					//$("ul#update li:last").fadeOut(1);
-  					//$("ul#update li:last").fadeIn(2000);
+  					//$("ul#update li:last").fadeOut(0.5);
+  					$("ul#update li:last").hide().fadeIn(2000);
+
+  					buttonStatus = buttonStatus.toLowerCase();
+  					if(buttonStatus.toLowerCase().indexOf("disarm") != -1){
+
+  								$("#arm_button").val("Arm System");
+  							    $("#arm_button").addClass('btn-success').removeClass('btn-danger');
+  							    $("#system_status_text").html("Unarmed");
+  							    $("#system_status_text").css("color","green");
+  							    $("#system_status_text").hide().fadeIn(1000);
+
+  					}
+  					else{
+
+  							 $("#arm_button").val("Disarm System");
+  							 $("#arm_button").addClass('btn-danger').removeClass('btn-success');
+  							 $("#system_status_text").html("Armed");
+  							 $("#system_status_text").css("color","red");
+
+  							 $("#system_status_text").hide().fadeIn(1000);
+
+  					}
 
   				}
 
@@ -96,38 +118,41 @@ $(document).ready(function(){
 
 
 
-<ul id="update" style="font-family: 'Abel', sans-serif; margin-bottom:70px; width:400px; text-align:left;">
+<ul id="update" style="font-family: 'Abel', sans-serif; margin-bottom:70px; width:400px; text-align:left; list-style-type:none; ">
 
 <?	
+
+
 			//echo date("g:i a.", time());     //4:45 pm.
 			$length = sizeof($daily_log_array);
-			for($i = 0 ; $i < $length ; $i = $i + 1){
-				echo "<li>";
-				echo $daily_log_array[$i]." "; echo "<span style=\"color:red;\">".$daily_log_time_array[$i]."</span><br>";
-				echo "</li>";
 
-			}
+
+						for($i = 0 ; $i < $length ; $i = $i + 1){
+							echo "<li>";
+							echo $daily_log_array[$i]." "; echo "<span style=\"color:red;\">".$daily_log_time_array[$i]."</span><br>";
+							echo "</li>";
+
+						}
+
+			
 ?>
 
 			</ul>
-			<br><br>
-			<span class="alert alert-info">Scure will continue to update the summary as the day goes on!</span>
 			</p>
+			
+			<span class="alert alert-info">Scure will continue to update the summary as the day goes on!</span>
 
 		<? if(strpos($system_status, 'Disarm')!== false){?>
-		<h4 style="font-family: 'Abel', sans-serif;"> System Status: <span style="color:red;">Armed</span></h4>
+		<h4 style="font-family: 'Abel', sans-serif;"> System Status: <span id="system_status_text"style="color:red;">Armed</span></h4>
 		 <!--<button onclick="location.href='welcome/changeAlarmStatus';"class="btn btn-large btn-primary btn-danger" type="button" id="arm_button"><?echo $system_status;?></button>
 		 -->
-		 <button class="btn btn-large btn-primary btn-danger" type="button" id="arm_button"><?echo $system_status;?></button>
-		 <input type="submit" class="arm_button"/>
+		 <input type="submit" class="btn btn-large btn-danger" id="arm_button" value="<?echo $system_status;?>"/>
 
 		<?}else{?>
-		<h4 style="font-family: 'Abel', sans-serif;"> System Status: <span style="color:green;">Unarmed</span></h4>
+		<h4 style="font-family: 'Abel', sans-serif;"> System Status: <span id="system_status_text"style="color:green;">Unarmed</span></h4>
 		<!--<button onclick="location.href='welcome/changeAlarmStatus';"class="btn btn-large btn-primary btn-success" type="button" id="arm_button"><?echo $system_status;?></button>
 		-->
-
-		<button class="btn btn-large btn-primary btn-success" type="button" id="arm_button"><?echo $system_status;?></button>
-		 <input type="submit" class="arm_button"/>
+		 <input type="submit" id="arm_button" class="btn btn-large btn-success" value="<?echo $system_status;?>"/>
 
 		<?}?>
 	  </div>
