@@ -10,15 +10,18 @@
 
 ?>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js">
-</script>
-  <script type="text/javascript">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+
+
+<script type="text/javascript">
 $(document).ready(function(){
 
 
 	$("#arm_button").click(function(){
 			var buttonStatus = $("#arm_button").val();
-  			//We need to also handle loading to the database.  
+  			//We need to also handle loading to the database. 
+
+  			/** AJAX Live Loading Section **/ 
   			$.ajax({
   				url: "welcome/liveUpdateActivity",
   				cache: false,
@@ -44,7 +47,6 @@ $(document).ready(function(){
   							 $("#arm_button").addClass('btn-danger').removeClass('btn-success');
   							 $("#system_status_text").html("Armed");
   							 $("#system_status_text").css("color","red");
-
   							 $("#system_status_text").hide().fadeIn(1000);
 
   					}
@@ -55,20 +57,13 @@ $(document).ready(function(){
   	}); // end on click
 });// end document ready
 
-  		
-
-  </script>
+</script>
 
 
-
-
-
-
-
+<!-- BODY BEGIN -->
 <body bgcolor="#03899C" style="background-image:url('http://scure.me/img/grey.png'); background-attachment:fixed;">
 
 
-<!-- Navigation...Should consolidate this into another header file. -->
 <div id="container" style="background-color:white;margin-top:110px; padding:15px;">
 	<ul class="nav nav-pills">		 
 		  <li class="active">
@@ -81,47 +76,33 @@ $(document).ready(function(){
 	<br><br>
 
 
-	<!-- System Status -->
 
 <?
 		$timezone = date_default_timezone_get();
 		date_default_timezone_set($timezone);
 		$time = time();
-
-
 ?>
 	
 
 <!-- SUMMARY/GRAPH SECTION -->
 <div class="row-fluid" align="center" style="margin-top:0px; margin-left:auto; margin-right:auto;">
-	  
-
-
-
+	 
 
 	  <div class="span6" id="radarGraph"> 
-
 			<h1 id="hub_title"style="font-family: 'Abel', sans-serif;">Hub Statistics</h1><br>
-
 			<canvas id="doughnut" height="350" width="350" ></canvas>
-
 	  </div>
 
 
 	  <div class="span6"  id="summary" align="left" style="padding-left:75px;">
-
 	  		<!-- users can adjust the level of notifications received in the summary -->
 			<h1 style="font-family: 'Abel', sans-serif;">Summary for <? echo $date; ?></h1><br>
-
-			<p style="font-family: 'Abel', sans-serif; margin-bottom:70px; width:400px; text-align:left;">
+			<p style="font-family: 'Abel', sans-serif; margin-bottom:70px; width:400px; text-align:left;"> <!-- get rid of margin bott -->
 			
-
-
-
-<ul id="update" style="font-family: 'Abel', sans-serif; margin-bottom:70px; width:400px; text-align:left; list-style-type:none; ">
+<!-- add fixed length with scrolling -->
+			<ul id="update" style="font-family: 'Abel', sans-serif; margin-bottom:40px; width:400px; text-align:left; list-style-type:none; ">
 
 <?	
-
 
 			//echo date("g:i a.", time());     //4:45 pm.
 			$length = sizeof($daily_log_array);
@@ -140,7 +121,7 @@ $(document).ready(function(){
 			</ul>
 			</p>
 			
-			<span class="alert alert-info">Scure will continue to update the summary as the day goes on!</span>
+		<span class="alert alert-info">Scure will continue to update the summary as the day goes on!</span>
 
 		<? if(strpos($system_status, 'Disarm')!== false){?>
 		<h4 style="font-family: 'Abel', sans-serif;"> System Status: <span id="system_status_text"style="color:red;">Armed</span></h4>
@@ -171,50 +152,36 @@ $(document).ready(function(){
 	<div class ="row-fluid" align="center" style="margin-left:0px; margin-bottom:100px;">
 		
 		<div class="span3" style="background-color:#CC333F; color:white; height:220px;">				
-		
 		<h2 id="temp_level" style="font-family: 'Abel', sans-serif; "> Room Temperature</h2>  
 		<br>
 		<h1 id="temperature_value" style="font-family: 'Roboto Condensed', sans-serif; font-size:46px;"><? echo "73 F";?></h1>
-
 		</div>
 		
-
 		<!-- Decibel reading,  (40 db  = quiet living room) --> 
 		<div class="span3" style="background-color:#00A0B0; color:white; height:220px;">				
-		
 		<h2 id="sound_level" style="font-family: 'Abel', sans-serif;"> Sound Level</h2>	
-		
 		<br>
 		<h1 id="decibel_value" style="font-family: 'Roboto Condensed', sans-serif; font-size:46px;"><? echo "42 dB";?></h1>
-
-
 		</div>
 		
-
-
 		<!-- Traffic will display the amount of foot traffic in the area.  For example, user can set an acceptable amount of foot traffic -->
 		<div class="span3" style="background-color:#EB6841; color:white; height:220px;">				
-		
 		<h2 id="traffic_level" style="font-family: 'Abel', sans-serif;">Traffic</h2>	
 		<br>
 		<h1 id="traffic_value" style="font-family: 'Roboto Condensed', sans-serif; font-size:46px;"><? echo "Medium";?></h1>
-
-
 		</div>
-
-
-
 
 		<div class="span3" style="background-color:#EDC951; color:white; height:220px;">				
 		<h2 id="visitor_level" style="font-family: 'Abel', sans-serif;">Visitors</h2>	
 		<br>
 		<h1 id="visitor_value" style="font-family: 'Roboto Condensed', sans-serif; font-size:46px;"><? echo "2";?></h1>
-
 		</div>
-
+	
 	</div>
-
 	<!-- END SNAPSHOT AREA --> 
+
+
+
 
 	<h2 id="snapshot" style="font-family: 'Abel', sans-serif;">Week At-A-Glance (9/1/13 - 9/7/13)</h2>
 	<p class="footer"></p>
@@ -250,7 +217,7 @@ $(document).ready(function(){
 			</ul>
 			<a href="#">Details</a>
 			<h3>Wed.</h3>
-						<p class="label label-important">Alarm Triggered	   (12:24 PM)</p>
+			<p class="label label-important">Alarm Triggered	   (12:24 PM)</p>
 
 	  </div>	 
 
